@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Elementos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <section class="panel panel-form">
+      <h1>Gestor de Elementos</h1>
+      <p class="subtitle">Agrega, edita, filtra y ordena tu colección.</p>
+
+      <form id="item-form" novalidate>
+        <input type="hidden" id="item-id">
+
+        <label for="name">Nombre del elemento</label>
+        <input id="name" name="name" type="text" placeholder="Ej: Super Mario Bros" required>
+        <small id="name-error" class="field-error" aria-live="polite"></small>
+
+        <label for="category">Categoría</label>
+        <input id="category" name="category" type="text" placeholder="Ej: Videojuego" required>
+        <small id="category-error" class="field-error" aria-live="polite"></small>
+
+        <label for="year">Año de lanzamiento</label>
+        <input id="year" name="year" type="number" min="1000" max="2100" placeholder="Ej: 1985" required>
+        <small id="year-error" class="field-error" aria-live="polite"></small>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn">Agregar elemento</button>
+          <button type="button" id="cancel-edit" class="ghost" hidden>Cancelar edición</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel panel-table">
+      <div class="toolbar">
+        <div class="filters">
+          <input id="search-input" type="search" placeholder="Buscar por nombre o categoría...">
+          <select id="category-filter">
+            <option value="all">Todas las categorías</option>
+          </select>
+        </div>
+
+        <div class="sort-controls">
+          <label for="sort-field">Ordenar por</label>
+          <select id="sort-field">
+            <option value="name">Nombre</option>
+            <option value="category">Categoría</option>
+            <option value="year">Año</option>
+          </select>
+          <button id="sort-direction" type="button" aria-label="Cambiar dirección de orden" title="Cambiar dirección de orden">
+            Ascendente
+          </button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Año</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination" aria-label="Controles de paginación">
+        <div class="page-size-wrap">
+          <label for="page-size">Filas por página</label>
+          <select id="page-size">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+        <div class="page-nav">
+          <button id="prev-page" type="button" class="ghost">Anterior</button>
+          <span id="page-info">Página 1 de 1</span>
+          <button id="next-page" type="button" class="ghost">Siguiente</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <template id="row-template">
+    <tr>
+      <td data-col="name"></td>
+      <td data-col="category"></td>
+      <td data-col="year"></td>
+      <td data-col="actions" class="actions">
+        <button type="button" class="edit">Editar</button>
+        <button type="button" class="delete danger">Eliminar</button>
+      </td>
+    </tr>
+  </template>
+
+  <div id="delete-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" aria-describedby="delete-modal-text">
+      <h2 id="delete-modal-title">Confirmar eliminación</h2>
+      <p id="delete-modal-text">¿Seguro que quieres eliminar este elemento?</p>
+      <div class="modal-actions">
+        <button id="cancel-delete" type="button" class="ghost">Cancelar</button>
+        <button id="confirm-delete" type="button" class="danger">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
